@@ -14,10 +14,7 @@ import static org.junit.Assert.*;
  * Created by wchb7 on 16-5-9.
  */
 
-
-@RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration("classpath:spring/spring-dao.xml")
-public class SuccessKilledDaoTest {
+public class SuccessKilledDaoTest extends BaseDaoTest{
 
     @Resource
     private SuccessKilledDao successKilledDao;

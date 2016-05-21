@@ -1,32 +1,15 @@
 package org.seckill.dao;
 
-import com.mchange.v2.c3p0.ComboPooledDataSource;
+import com.alibaba.druid.pool.DruidDataSource;
 import org.junit.Test;
-import org.junit.runner.RunWith;
 import org.seckill.entity.Seckill;
-import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import javax.annotation.Resource;
-
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.util.*;
 
-import static org.junit.Assert.*;
-
-/**
- * Created by wchb7 on 16-5-8.
- */
-
-/**
- * 配置Spring和Junit整合,junit启动时加载springIOC容器
- * spring-test,junit
- */
-
-@RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration("classpath:spring/spring-dao.xml")
-public class SeckillDaoTest {
+public class SeckillDaoTest extends BaseDaoTest{
 
 
     //注入Dao实现类依赖
@@ -93,24 +76,21 @@ public class SeckillDaoTest {
 
     @Test
     public void testComboPooledDataSource() throws Exception {
-        String url = "jdbc:mysql://10.112.1.110:3306/test_mysql";
+        String url = "jdbc:mysql://localhost:3306/seckill";
         String driver = "com.mysql.jdbc.Driver";
         String user = "root";
-        String passwd = "111111";
+        String passwd = "nishengri";
 
-        ComboPooledDataSource cpds = new ComboPooledDataSource();
+        DruidDataSource druidDataSource = new DruidDataSource();
 
-        cpds.setDriverClass(driver);
-        cpds.setJdbcUrl(url);
-        cpds.setUser(user);
-        cpds.setPassword(passwd);
+        druidDataSource.setUrl(url);
+        druidDataSource.setUsername(user);
+        druidDataSource.setPassword(passwd);
 
-        cpds.setMinPoolSize(5);
-        cpds.setAcquireIncrement(5);
-        cpds.setMaxPoolSize(30);
-        cpds.setMaxIdleTime(60);
+        druidDataSource.setDriverClassName(driver);
 
-        Connection con = cpds.getConnection();
+
+        Connection con = druidDataSource.getConnection();
 
         System.out.println("Get Connection Success!!!   " + con);
 
