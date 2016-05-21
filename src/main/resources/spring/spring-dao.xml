@@ -4,7 +4,7 @@
        xmlns:context="http://www.springframework.org/schema/context"
        xsi:schemaLocation="http://www.springframework.org/schema/beans
         http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd"
->
+        >
 
     <!--配置整合mybatis过程-->
 
@@ -12,41 +12,66 @@
     <context:property-placeholder location="classpath:jdbc.properties"/>
 
     <!--2.配置连接池属性-->
-    <!--todo java.sql.SQLException: Access denied for user ''@'localhost' (using password: NO)-->
-    <!--    <bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource">
-            &lt;!&ndash;    <property name="driverClass" value="${driverClassName}"></property>
-                    <property name="jdbcUrl" value="${jdbc.url}"></property>
-                    <property name="user" value="${jdbc.username}"></property>
-                    <property name="password" value="${jdbc.password}"></property>&ndash;&gt;
+    <!-- 数据源配置, 使用 BoneCP 数据库连接池 -->
+    <bean id="dataSource" class="com.alibaba.druid.pool.DruidDataSource" init-method="init" destroy-method="close">
+        <!-- 数据源驱动类可不写，Druid默认会自动根据URL识别DriverClass -->
+        <property name="driverClassName" value="${jdbc.driver}" />
 
-            <property name="driverClass" value="com.mysql.jdbc.Driver"></property>
-            &lt;!&ndash;<property name="jdbcUrl" value="jdbc:mysql://localhost:3306/test_mysql"></property>&ndash;&gt;
-            <property name="jdbcUrl" value="jdbc:mysql://127.0.0.1:3306/test_mysql"></property>
-            <property name="user" value="root"></property>
-            <property name="password" value="111111"></property>
+        <!-- 基本属性 url、user、password -->
+        <property name="url" value="${jdbc.url}" />
+        <property name="username" value="${jdbc.username}" />
+        <property name="password" value="${jdbc.password}" />
 
-            <property name="maxPoolSize" value="30"></property>
-            <property name="minPoolSize" value="10"></property>
-            &lt;!&ndash;关闭连接后不自动commit&ndash;&gt;
-            <property name="autoCommitOnClose" value="false"></property>
-            &lt;!&ndash;获取连接超时时间&ndash;&gt;
-            <property name="checkoutTimeout" value="10000"></property>
-            &lt;!&ndash;获取连接重试次数&ndash;&gt;
-            <property name="acquireRetryAttempts" value="3"></property>
-        </bean>-->
+        <!-- 配置初始化大小、最小、最大 -->
+        <property name="initialSize" value="${jdbc.pool.init}" />
+        <property name="minIdle" value="${jdbc.pool.minIdle}" />
+        <property name="maxActive" value="${jdbc.pool.maxActive}" />
 
-    <bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource">
+        <!-- 配置获取连接等待超时的时间 -->
+        <property name="maxWait" value="60000" />
 
-        <property name="driverClassName" value="com.mysql.jdbc.Driver"/>
-        <property name="url" value="jdbc:mysql://localhost:3306/test_mysql"/>
-        <property name="username" value="root"/>
-        <property name="password" value="111111"/>
-        <!--todo -->
-        <!--    <property name="driverClassName" value="${driverClassName}"/>
-                <property name="url" value="${jdbc.url}"/>
-                <property name="username" value="${jdbc.username}"/>
-                <property name="password" value="${jdbc.password}"/>-->
+        <!-- 配置间隔多久才进行一次检测，检测需要关闭的空闲连接，单位是毫秒 -->
+        <property name="timeBetweenEvictionRunsMillis" value="60000" />
+
+        <!-- 配置一个连接在池中最小生存的时间，单位是毫秒 -->
+        <property name="minEvictableIdleTimeMillis" value="300000" />
+
+        <property name="validationQuery" value="${jdbc.testSql}" />
+        <property name="testWhileIdle" value="true" />
+        <property name="testOnBorrow" value="false" />
+        <property name="testOnReturn" value="false" />
+
+        <!-- 打开PSCache，并且指定每个连接上PSCache的大小（Oracle使用）
+        <property name="poolPreparedStatements" value="true" />
+        <property name="maxPoolPreparedStatementPerConnectionSize" value="20" /> -->
+
+        <!-- 配置监控统计拦截的filters -->
+        <property name="filters" value="stat" />
     </bean>
+
+
+    <!--<bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource">-->
+        <!--<property name="driverClass" value="${driverClassName}"></property>-->
+        <!--<property name="jdbcUrl" value="${jdbc.url}"></property>-->
+        <!--<property name="user" value="${jdbc.username}"></property>-->
+        <!--<property name="password" value="${jdbc.password}"></property>-->
+
+        <!--<property name="maxPoolSize" value="30"></property>-->
+        <!--<property name="minPoolSize" value="10"></property>-->
+        <!--&lt;!&ndash;关闭连接后不自动commit&ndash;&gt;-->
+        <!--<property name="autoCommitOnClose" value="false"></property>-->
+        <!--&lt;!&ndash;获取连接超时时间&ndash;&gt;-->
+        <!--<property name="checkoutTimeout" value="10000"></property>-->
+        <!--&lt;!&ndash;获取连接重试次数&ndash;&gt;-->
+        <!--<property name="acquireRetryAttempts" value="3"></property>-->
+    <!--</bean>-->
+
+    <!--<bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource">-->
+        <!--<property name="driverClassName" value="${driverClassName}"/>-->
+        <!--<property name="url" value="${jdbc.url}"/>-->
+        <!--<property name="username" value="${jdbc.username}"/>-->
+        <!--<property name="password" value="${jdbc.password}"/>-->
+    <!--</bean>-->
 
 
     <!--３.配置SqlSessionFactory对象-->
