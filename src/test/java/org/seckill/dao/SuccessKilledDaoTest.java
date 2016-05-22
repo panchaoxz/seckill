@@ -2,6 +2,7 @@ package org.seckill.dao;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.seckill.BaseTest;
 import org.seckill.entity.SuccessKilled;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
@@ -14,7 +15,7 @@ import static org.junit.Assert.*;
  * Created by wchb7 on 16-5-9.
  */
 
-public class SuccessKilledDaoTest extends BaseDaoTest{
+public class SuccessKilledDaoTest extends BaseTest {
 
     @Resource
     private SuccessKilledDao successKilledDao;

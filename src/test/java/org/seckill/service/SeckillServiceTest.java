@@ -1,29 +1,19 @@
 package org.seckill.service;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
 import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.seckill.BaseTest;
 import org.seckill.dto.Exposer;
 import org.seckill.dto.SeckillExecution;
 import org.seckill.entity.Seckill;
 import org.seckill.exception.RepeatKillException;
 import org.seckill.exception.SeckillCloseException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
-import static org.junit.Assert.*;
+public class SeckillServiceTest extends BaseTest{
 
-/**
- * Created by wchb7 on 16-5-14.
- */
-
-@RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration({"classpath:spring/spring-dao.xml", "classpath:spring/spring-service.xml"})
-public class SeckillServiceTest {
-
-    private Log LOG = LogFactory.getLog(this.getClass());
+    private final Logger LOG = LoggerFactory.getLogger(this.getClass());
 
     @Autowired
     private SeckillService seckillService;
@@ -40,21 +30,23 @@ public class SeckillServiceTest {
         System.out.println(seckillService.getSeckillList());
     }
 
+    /**
+     * 集成测试：秒杀完整流程，可重复执行
+     */
     @Test
     public void testSeckillLogic() {
 
-        long id = 1000;
+        long id = 1001;
         Exposer exposer = seckillService.exportSeckillUrl(id);
-        System.out.println(exposer);
+        LOG.info("exposer={}",exposer);
         if (exposer.isExposed()) {
 
-            long phone = 15821739222L;
-
+            long phone = 15821739225L;
             String md5 = exposer.getMd5();
 
             try {
                 SeckillExecution seckillExecution = seckillService.executeSeckill(id, phone, md5);
-                System.out.println(seckillExecution);
+                LOG.info("result={}",seckillExecution);
             } catch (RepeatKillException e) {
                 LOG.error(e.getMessage());
             } catch (SeckillCloseException e) {
@@ -62,7 +54,7 @@ public class SeckillServiceTest {
             }
 
         } else {
-            LOG.warn(exposer.toString());
+            LOG.warn("秒杀未开始：{}",exposer.toString());
         }
 
     }
@@ -71,20 +63,20 @@ public class SeckillServiceTest {
     public void testExportSeckillUrl() throws Exception {
         long id = 1000;
         Exposer exposer = seckillService.exportSeckillUrl(id);
-        System.out.println(exposer);
-//      Exposer{exposed=true, md5='9b8082b22ded08718a4255e9f482a80c', seckillId=1000, now=0, start=0, end=0}
+        LOG.info("exposer={}",exposer.toString());
+//     Exposer{exposed=true, md5='be3d9cdd642d64f8ed97eb05e93b9628', seckillId=1000, now=0, start=0, end=0}
     }
 
     @Test
     public void testExecuteSeckill() throws Exception {
         long id = 1000;
-        long phone = 15821739222L;
+        long phone = 15821739223L;
 
-        String md5 = "9b8082b22ded08718a4255e9f482a80c";
+        String md5 = "be3d9cdd642d64f8ed97eb05e93b9628";
 
         SeckillExecution seckillExecution = seckillService.executeSeckill(id, phone, md5);
 
-        System.out.println(seckillExecution);
+        LOG.info("seckillExecution={}",seckillExecution);
 
     }
 }

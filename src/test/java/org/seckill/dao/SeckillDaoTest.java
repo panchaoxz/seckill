@@ -2,6 +2,7 @@ package org.seckill.dao;
 
 import com.alibaba.druid.pool.DruidDataSource;
 import org.junit.Test;
+import org.seckill.BaseTest;
 import org.seckill.entity.Seckill;
 
 import javax.annotation.Resource;
@@ -9,8 +10,7 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.util.*;
 
-public class SeckillDaoTest extends BaseDaoTest{
-
+public class SeckillDaoTest extends BaseTest {
 
     //注入Dao实现类依赖
     @Resource
