@@ -5,7 +5,6 @@ import org.seckill.enums.SeckillStatEnum;
 
 /**
  * 封装秒杀执行后的结果
- * Created by wchb7 on 16-5-13.
  */
 public class SeckillExecution {
 
@@ -57,11 +56,10 @@ public class SeckillExecution {
     }
 
 
-    public SeckillExecution(long seckillId, SeckillStatEnum statEnum, String stateInfo) {
+    public SeckillExecution(long seckillId, SeckillStatEnum statEnum) {
         this.seckillId = seckillId;
         this.state = statEnum.getState();
         this.stateInfo = statEnum.getStateInfo();
-        this.stateInfo = stateInfo;
     }
 
     public SeckillExecution(long seckillId, SeckillStatEnum statEnum, SuccessKilled successKilled) {
