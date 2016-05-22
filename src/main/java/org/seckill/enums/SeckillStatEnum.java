@@ -1,7 +1,7 @@
 package org.seckill.enums;
 
 /**
- * Created by wchb7 on 16-5-14.
+ * 使用枚举 表示 常量的数据字段
  */
 public enum SeckillStatEnum {
     SUCCESS(1, "秒杀成功"),

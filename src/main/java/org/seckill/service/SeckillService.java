@@ -10,7 +10,6 @@ import org.seckill.exception.SeckillException;
 import java.util.List;
 
 /**
- * Created by wchb7 on 16-5-13.
  * 业务接口:站在"使用者"的角度设计接口
  * 1.方法的定义的粒度.2.参数.3.返回类型(return /异常)
  */

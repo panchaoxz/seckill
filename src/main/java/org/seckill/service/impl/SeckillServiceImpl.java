@@ -1,8 +1,6 @@
 package org.seckill.service.impl;
 
 import org.apache.commons.lang3.StringUtils;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
 import org.seckill.dao.SeckillDao;
 import org.seckill.dao.SuccessKilledDao;
 import org.seckill.dto.Exposer;
@@ -14,6 +12,8 @@ import org.seckill.exception.RepeatKillException;
 import org.seckill.exception.SeckillCloseException;
 import org.seckill.exception.SeckillException;
 import org.seckill.service.SeckillService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -23,13 +23,12 @@ import java.util.Date;
 import java.util.List;
 
 /**
- * Created by wchb7 on 16-5-14.
+ * Created by ray.wang on 16-5-14.
  */
-
 @Service
 public class SeckillServiceImpl implements SeckillService {
 
-    private Log LOG = LogFactory.getLog(this.getClass());
+    private final Logger LOG = LoggerFactory.getLogger(this.getClass());
 
     @Autowired
     private SeckillDao seckillDao;
@@ -38,7 +37,7 @@ public class SeckillServiceImpl implements SeckillService {
     private SuccessKilledDao successKilledDao;
 
     //md5盐值字符串,用于混淆md5
-    private final String slat = "asdfasd2341242@#$@#$%$%%#@$%#@%^%^";
+    private final String slat = "JHJÓGJ$%^&*(wew34567eIHFv456789KBMB#$%^&*";
 
     public List<Seckill> getSeckillList() {
         return seckillDao.queryAll(0, 4);
@@ -49,7 +48,7 @@ public class SeckillServiceImpl implements SeckillService {
     }
 
     public Exposer exportSeckillUrl(long seckillId) {
-        Seckill seckill = getById(seckillId);
+        Seckill seckill = seckillDao.queryById(seckillId);
 
         if (seckill == null) {
             return new Exposer(false, seckillId);
@@ -112,15 +111,16 @@ public class SeckillServiceImpl implements SeckillService {
             //所有的编译期异常转化为运行期异常,spring的声明式事务做rollback
             throw new SeckillException("seckill inner error: " + e.getMessage());
         }
-
-
     }
 
-
+    /**
+     * 获取MD5值
+     * @param seckillId
+     * @return
+     */
     private String getMD5(long seckillId) {
         String base = seckillId + "/" + slat;
         String md5 = DigestUtils.md5DigestAsHex(base.getBytes());
-        LOG.info("_________________________________md5: " + md5);
         return md5;
     }
 }

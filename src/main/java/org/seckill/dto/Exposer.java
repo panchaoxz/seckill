@@ -2,7 +2,6 @@ package org.seckill.dto;
 
 /**
  * 暴露秒杀地址DTO
- * Created by wchb7 on 16-5-13.
  */
 public class Exposer {
 

@@ -49,31 +49,6 @@
         <property name="filters" value="stat" />
     </bean>
 
-
-    <!--<bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource">-->
-        <!--<property name="driverClass" value="${driverClassName}"></property>-->
-        <!--<property name="jdbcUrl" value="${jdbc.url}"></property>-->
-        <!--<property name="user" value="${jdbc.username}"></property>-->
-        <!--<property name="password" value="${jdbc.password}"></property>-->
-
-        <!--<property name="maxPoolSize" value="30"></property>-->
-        <!--<property name="minPoolSize" value="10"></property>-->
-        <!--&lt;!&ndash;关闭连接后不自动commit&ndash;&gt;-->
-        <!--<property name="autoCommitOnClose" value="false"></property>-->
-        <!--&lt;!&ndash;获取连接超时时间&ndash;&gt;-->
-        <!--<property name="checkoutTimeout" value="10000"></property>-->
-        <!--&lt;!&ndash;获取连接重试次数&ndash;&gt;-->
-        <!--<property name="acquireRetryAttempts" value="3"></property>-->
-    <!--</bean>-->
-
-    <!--<bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource">-->
-        <!--<property name="driverClassName" value="${driverClassName}"/>-->
-        <!--<property name="url" value="${jdbc.url}"/>-->
-        <!--<property name="username" value="${jdbc.username}"/>-->
-        <!--<property name="password" value="${jdbc.password}"/>-->
-    <!--</bean>-->
-
-
     <!--３.配置SqlSessionFactory对象-->
     <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
         <!--注入数据库连接池-->
