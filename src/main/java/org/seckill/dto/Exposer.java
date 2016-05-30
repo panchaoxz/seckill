@@ -24,6 +24,9 @@ public class Exposer {
 
     private long end;
 
+    public Exposer() {
+    }
+
     public Exposer(boolean exposed, String md5, long seckillId) {
         this.exposed = exposed;
         this.md5 = md5;
