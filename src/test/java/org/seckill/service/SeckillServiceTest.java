@@ -79,4 +79,5 @@ public class SeckillServiceTest extends BaseTest{
         LOG.info("seckillExecution={}",seckillExecution);
 
     }
+
 }
