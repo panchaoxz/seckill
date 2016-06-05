@@ -9,7 +9,7 @@
     <!--配置整合mybatis过程-->
 
     <!--１.配置数据库相关参数-->
-    <context:property-placeholder location="classpath:jdbc.properties"/>
+    <context:property-placeholder location="classpath:jdbc.properties,redis.properties"/>
 
     <!--2.配置连接池属性-->
     <!-- 数据源配置, 使用 BoneCP 数据库连接池 -->
@@ -68,4 +68,11 @@
         <!-- 给出需要扫描的Dao接口-->
         <property name="basePackage" value="org.seckill.dao"/>
     </bean>
+
+    <!--redisDao-->
+    <bean id="redisDao" class="org.seckill.dao.redis.RedisDao">
+        <constructor-arg name="ip" value="${redis.ip}"/>
+        <constructor-arg name="port" value="${redis.port}"/>
+    </bean>
+
 </beans>
