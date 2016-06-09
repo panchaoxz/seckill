@@ -1,4 +1,4 @@
-###慕课网Java高并发秒杀([课程](http://www.imooc.com/learn/587))
+###慕课网Java高并发秒杀([课程](http://www.imooc.com/learn/587))-代码完整优化版
 
 ###修改说明：
 ####1.修改数据库连接池 为 Druid
