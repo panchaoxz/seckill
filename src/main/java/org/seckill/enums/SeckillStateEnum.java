@@ -3,7 +3,7 @@ package org.seckill.enums;
 /**
  * 使用枚举 表示 常量的数据字段
  */
-public enum SeckillStatEnum {
+public enum SeckillStateEnum {
     SUCCESS(1, "秒杀成功"),
     END(0, "秒杀结束"),
     REPEAT_KILL(-1, "重复秒杀"),
@@ -14,7 +14,7 @@ public enum SeckillStatEnum {
 
     private String stateInfo;
 
-    SeckillStatEnum(int state, String stateInfo) {
+    SeckillStateEnum(int state, String stateInfo) {
         this.state = state;
         this.stateInfo = stateInfo;
     }
@@ -27,8 +27,8 @@ public enum SeckillStatEnum {
         return stateInfo;
     }
 
-    public static SeckillStatEnum stateOf(int index) {
-        for (SeckillStatEnum state : values()) {
+    public static SeckillStateEnum stateOf(int index) {
+        for (SeckillStateEnum state : values()) {
             if (state.getState() == index) {
                 return state;
             }

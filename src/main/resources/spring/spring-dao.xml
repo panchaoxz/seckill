@@ -9,7 +9,7 @@
     <!--配置整合mybatis过程-->
 
     <!--１.配置数据库相关参数-->
-    <context:property-placeholder location="classpath:jdbc.properties,redis.properties"/>
+    <context:property-placeholder location="classpath:jdbc.properties,classpath:redis.properties"/>
 
     <!--2.配置连接池属性-->
     <!-- 数据源配置, 使用 BoneCP 数据库连接池 -->

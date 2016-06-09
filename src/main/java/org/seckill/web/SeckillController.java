@@ -4,10 +4,9 @@ import org.seckill.dto.Exposer;
 import org.seckill.dto.SeckillExecution;
 import org.seckill.dto.SeckillResult;
 import org.seckill.entity.Seckill;
-import org.seckill.enums.SeckillStatEnum;
+import org.seckill.enums.SeckillStateEnum;
 import org.seckill.exception.RepeatKillException;
 import org.seckill.exception.SeckillCloseException;
-import org.seckill.exception.SeckillException;
 import org.seckill.service.SeckillService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -16,7 +15,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import java.awt.image.RescaleOp;
 import java.util.Date;
 
 /**
@@ -85,17 +83,19 @@ public class SeckillController {
             result = new SeckillResult<SeckillExecution>(false,"未注册");
         }else {
             try{
-                seckillExecution = seckillService.executeSeckill(seckillId, userPhone, md5);
+                // dao操作 seckillExecution = seckillService.executeSeckill(seckillId, userPhone, md5);
+                // procedure 操作
+                seckillExecution = seckillService.executeSeckillProcedure(seckillId, userPhone, md5);
                 result =  new SeckillResult<SeckillExecution>(true,seckillExecution);
             }catch (SeckillCloseException e){
-                seckillExecution = new SeckillExecution(seckillId, SeckillStatEnum.END);
+                seckillExecution = new SeckillExecution(seckillId, SeckillStateEnum.END);
                 result = new SeckillResult<SeckillExecution>(true,seckillExecution);
             }catch (RepeatKillException e){
-                seckillExecution = new SeckillExecution(seckillId, SeckillStatEnum.REPEAT_KILL);
+                seckillExecution = new SeckillExecution(seckillId, SeckillStateEnum.REPEAT_KILL);
                 result = new SeckillResult<SeckillExecution>(true,seckillExecution);
             }catch (Exception e){
                 LOG.error(e.getMessage(),e);
-                seckillExecution = new SeckillExecution(seckillId, SeckillStatEnum.INNER_ERROR);
+                seckillExecution = new SeckillExecution(seckillId, SeckillStateEnum.INNER_ERROR);
                 result = new SeckillResult<SeckillExecution>(true,seckillExecution);
             }
         }
