@@ -24,7 +24,7 @@ key idx_end_time(end_time),
 key idx_create_time(create_time)
 )ENGINE=INNODB AUTO_INCREMENT=1000 DEFAULT CHARSET=utf8 COMMENT='秒杀库存表';
 
--- 初始化数据
+-- 初始化数据 by panc
 INSERT into seckill(name,number,start_time,end_time)
 VALUES
 ('1000元秒杀iphone6',100,'2016-01-01 00:00:00','2016-01-02 00:00:00'),
